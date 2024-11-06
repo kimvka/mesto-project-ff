@@ -37,3 +37,5 @@ initialCards.forEach((cardData) => {
     const cardElement = createCard(cardData, deleteCard);
     cardList.append(cardElement);
 });
+
+export {createCard};
