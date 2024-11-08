@@ -1,6 +1,6 @@
 const cardTemplate = document.querySelector('#card-template').content;
 
-function createCard(item, deleteCallback, openPlacePopup, addLikeCard) {
+function createCard(item, cardTemplate, deleteCallback, openPlacePopup, addLikeCard) {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     const cardTitle = cardElement.querySelector('.card__title');
     const cardImage = cardElement.querySelector('.card__image');
@@ -19,8 +19,8 @@ function createCard(item, deleteCallback, openPlacePopup, addLikeCard) {
         deleteCallback(cardElement);
     });
 
-      //лайк кнопки
-      cardLikeButton.addEventListener('click', () => {
+    //лайк кнопки
+    cardLikeButton.addEventListener('click', () => {
         addLikeCard(cardLikeButton); // Переключаем состояние лайка
     });
     

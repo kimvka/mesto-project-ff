@@ -24,18 +24,17 @@ profileEditButton.addEventListener('click', () => {
     openModal(popupTypeEdit);
 });
 
-profileAddButton.addEventListener('click', ()=>{
+profileAddButton.addEventListener('click', () => {
     namePlaceInput.value = '';
     linkPlaceInput.value = '';
     openModal(popupTypeNewCard);
 });
 
-function openPlacePopup(item){
-    popupTypeImage.src = item.link;
+function openPlacePopup(item) { 
+    popupTypeImageImg.src = item.link;
     popupTypeImageImg.alt = item.name;
     popupTypeImageCaption.textContent = item.name
     openModal(popupTypeImage);
-    console.log(item);
 }
 
 //Закрытие попапов
@@ -83,7 +82,7 @@ const linkPlaceInput = document.querySelector('.popup__input_type_url');
 const formPlace = popupNewCard.querySelector('.popup__form');
 
 //Форма добавления карточки
-function formNewCardSubmit(evt){
+function formNewCardSubmit(evt) {
     evt.preventDefault();
 
     const newPlaceName = namePlaceInput.value;
@@ -94,13 +93,13 @@ function formNewCardSubmit(evt){
         link: newPlaceLink
     }
 
-    placesList.prepend(createCard(newPlace, cardTemplate, deleteCard, addLikeCard, openPlacePopup));
+    placesList.prepend(createCard(newPlace, cardTemplate, deleteCard, openPlacePopup, addLikeCard));
     closeModal(popupNewCard);
 }
 
 formPlace.addEventListener('submit', formNewCardSubmit);
 
 initialCards.forEach((item) => {
-    const cardElement = createCard(item, deleteCard, openPlacePopup, addLikeCard);
+    const cardElement = createCard(item, cardTemplate, deleteCard, openPlacePopup, addLikeCard);
     cardList.append(cardElement);
 });

@@ -4,7 +4,7 @@ function openModal(popup) {
    
     setTimeout(() => {
         popup.classList.add('popup_is-opened');
-      }, 0,1);
+    }, 0,1);
     
     document.addEventListener("keydown", closePressEscapeModal);
     popup.addEventListener("mousedown", closeOnOverlayModal);
@@ -15,9 +15,9 @@ function closeModal(item) {
     item.classList.remove('popup_is-opened');
     setTimeout(() => {
         item.classList.remove('popup_is-animated');
-      }, 600);
-        document.removeEventListener('keydown', closePressEscapeModal);
-        item.addEventListener('mousedown', closeOnOverlayModal);
+    }, 600);
+    document.removeEventListener('keydown', closePressEscapeModal);
+    item.addEventListener('mousedown', closeOnOverlayModal);
 }
 
 // Закрытие модального окна при клике вне его 
