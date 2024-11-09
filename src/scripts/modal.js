@@ -17,7 +17,7 @@ function closeModal(item) {
         item.classList.remove('popup_is-animated');
     }, 600);
     document.removeEventListener('keydown', closePressEscapeModal);
-    item.addEventListener('mousedown', closeOnOverlayModal);
+    item.removeEventListener('mousedown', closeOnOverlayModal);
 }
 
 // Закрытие модального окна при клике вне его 
@@ -34,4 +34,4 @@ function closePressEscapeModal(evt) {
     }
 }
 
-export { openModal, closeModal, closeOnOverlayModal, closePressEscapeModal };
+export { openModal, closeModal };

@@ -15,7 +15,7 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const closeButtons = document.querySelectorAll('.popup__close');
 
-import { openModal, closeModal, closeOnOverlayModal, closePressEscapeModal } from './scripts/modal.js';
+import { openModal, closeModal } from './scripts/modal.js';
 
 //Открытие попапов
 profileEditButton.addEventListener('click', () => {
@@ -46,16 +46,9 @@ closeButtons.forEach(button => {
     });
 });
 
-// Добавление обработчика для нажатия клавиши Escape для всех модальных окон
-document.addEventListener('keydown', closePressEscapeModal);
-
-// Добавления обработчика для клика на фон для каждого модального окна
-document.querySelectorAll('.popup').forEach(modal => {
-    modal.addEventListener('mousedown', closeOnOverlayModal);
-});
 
 //поля формы
-const formElement = popupTypeEdit.querySelector('.popup__form');
+const profilePersonForm = popupTypeEdit.querySelector('.popup__form');
 const nameInput = popupTypeEdit.querySelector('.popup__input_type_name');
 const jobInput = popupTypeEdit.querySelector('.popup__input_type_description');
 const personName = document.querySelector('.profile__title');
@@ -74,7 +67,7 @@ function formPersonSubmit(evt) {
     closeModal(popupTypeEdit);
 }
 
-formElement.addEventListener('submit', formPersonSubmit);
+profilePersonForm.addEventListener('submit', formPersonSubmit);
 
 const popupNewCard = document.querySelector('.popup_type_new-card');
 const namePlaceInput = document.querySelector('.popup__input_type_card-name');
