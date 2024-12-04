@@ -19,5 +19,54 @@ export const getInitialCards = () => {
     return fetch(`${apiConfig.baseURL}/cards`, {
         method: 'GET',
         headers: apiConfig.headers,
+    }).then((res) => res.json());
+};
+
+//Редактирование профиля
+export const editUserInfo = (userProfileName,userProfileAbout) => {
+    return fetch(`${apiConfig.baseURL}/users/me`, {
+        method: 'PATCH',
+        headers: apiConfig.headers,
+        body: JSON.stringify({
+            name: userProfileName,
+            about: userProfileAbout
+        })
+    }).then((res) => res.json());
+};
+
+//Добавление новой карточки
+export const editNewCard = (cadrName, cardLink) => {
+    return fetch(`${apiConfig.baseURL}/cards`, {
+        method: 'POST',
+        headers: apiConfig.headers,
+        body: JSON.stringify({
+            name: cadrName,
+            link: cardLink
+        })
+    }).then((res) => res.json());
+};
+
+//лайк карточки
+export const putLikeCard = (cardId) => {
+    return fetch(`${apiConfig.baseURL}/cards/likes/${cardId}`, {
+        method: 'PUT',
+        headers: apiConfig.headers,
     }).then((res) => res.json);
 };
+
+//удаление карточки
+export const deleteMyCard = (cardId) => {
+    return fetch(`${apiConfig.baseURL}/cards/${cardId}`, {
+        method: 'DELETE',
+        headers: apiConfig.headers,
+    }).then((res) => res.json());
+};
+
+//лайк
+export const likeCard = (cardId, isLiked) => {
+    return fetch(`${apiConfig.baseURL}/cards/likes/${cardId}`, {
+        method: isLiked? 'DELETE': 'PUT',
+        headers: apiConfig.headers,
+    }).then((res) => res.json());
+};
+

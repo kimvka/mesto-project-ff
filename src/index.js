@@ -6,7 +6,13 @@ import { initialCards } from './scripts/cards.js';
 
 import { enableValidation, validationConfig, clearValidation } from './scripts/validation.js';
 
-import { getUserInfo, getInitialCards } from './scripts/api.js';
+import { 
+    getUserInfo, 
+    getInitialCards, 
+    editUserInfo,
+    editNewCard,
+    deleteMyCard
+} from './scripts/api.js';
 
 const cardList = document.querySelector('.places__list');
 const popupTypeEdit = document.querySelector('.popup_type_edit');
@@ -64,13 +70,16 @@ const profileDescription = document.querySelector('.profile__description');
 function formPersonSubmit(evt) {
     evt.preventDefault();
     
-    const newPersoneName = nameInput.value;
-    const newProfileDescription = jobInput.value;
-    
-    personName.textContent = newPersoneName;
-    profileDescription.textContent = newProfileDescription;
-   
-    closeModal(popupTypeEdit);
+    editUserInfo(nameInput.value, jobInput.value)
+        .then(userData => {
+            const newPersoneName = nameInput.value;
+            const newProfileDescription = jobInput.value;
+            
+            personName.textContent = userData.name;
+            profileDescription.textContent = userData.about;
+
+            closeModal(popupTypeEdit);
+        })
 }
 
 profilePersonForm.addEventListener('submit', formPersonSubmit);
@@ -85,39 +94,34 @@ const formPlace = popupNewCard.querySelector('.popup__form');
 function formNewCardSubmit(evt) {
     evt.preventDefault();
 
-    const newPlaceName = namePlaceInput.value;
-    const newPlaceLink = linkPlaceInput.value;
-
-    const newPlace = {
-        name: newPlaceName,
-        link: newPlaceLink
-    }
-
-    placesList.prepend(createCard(newPlace, cardTemplate, deleteCard, openPlacePopup, addLikeCard));
-    closeModal(popupNewCard);
+    editNewCard(namePlaceInput.value, linkPlaceInput.value)
+        .then(newCardData => {
+            const newPlaceName = newCardData.name;
+            const newPlaceLink = newCardData.link;
+            
+            placesList.prepend(createCard(newCardData, cardTemplate, profileId, deleteCard, openPlacePopup, addLikeCard));
+            closeModal(popupNewCard);
+        })
 }
 
 formPlace.addEventListener('submit', formNewCardSubmit);
 
-//API код
+///вызов функции получение информации о пользователе и карточках с сервера и заполнение ими страницы
+let profileId;
+
 Promise.all([getUserInfo(),getInitialCards()])
     .then(([userData, cards]) => {
-        const profileId = userData._id;
+        profileId = userData._id;
         personName.textContent = userData.name;
         profileDescription.textContent = userData.about;
         profileImage.style.backgroundImage = `url('${userData.avatar}')`;
 
         cards.forEach((item) => {
-            const cardElement = createCard(item, cardTemplate, deleteCard, addLikeCard, openPlacePopup, profileId);
+            const cardElement = createCard(item, cardTemplate, profileId, deleteCard, addLikeCard, openPlacePopup, profileId);
             cardList.append(cardElement);
         });
     })
 
-
-initialCards.forEach((item) => {
-    const cardElement = createCard(item, cardTemplate, deleteCard, openPlacePopup, addLikeCard);
-    cardList.append(cardElement);
-});
 
 //Валидация
 enableValidation(validationConfig);
