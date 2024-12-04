@@ -4,6 +4,10 @@ import { createCard, deleteCard, cardTemplate, addLikeCard } from './scripts/car
 
 import { initialCards } from './scripts/cards.js';
 
+import { enableValidation, validationConfig, clearValidation } from './scripts/validation.js';
+
+import { getUserInfo, getInitialCards } from './scripts/api.js';
+
 const cardList = document.querySelector('.places__list');
 const popupTypeEdit = document.querySelector('.popup_type_edit');
 const popupTypeNewCard = document.querySelector('.popup_type_new-card');
@@ -21,12 +25,14 @@ import { openModal, closeModal } from './scripts/modal.js';
 profileEditButton.addEventListener('click', () => {
     nameInput.value = personName.textContent;
     jobInput.value = profileDescription.textContent;
+    clearValidation(popupTypeEdit, validationConfig);
     openModal(popupTypeEdit);
 });
 
 profileAddButton.addEventListener('click', () => {
     namePlaceInput.value = '';
     linkPlaceInput.value = '';
+    clearValidation(popupTypeNewCard, validationConfig);
     openModal(popupTypeNewCard);
 });
 
@@ -72,6 +78,7 @@ profilePersonForm.addEventListener('submit', formPersonSubmit);
 const popupNewCard = document.querySelector('.popup_type_new-card');
 const namePlaceInput = document.querySelector('.popup__input_type_card-name');
 const linkPlaceInput = document.querySelector('.popup__input_type_url');
+const profileImage = document.querySelector('.profile__image');
 const formPlace = popupNewCard.querySelector('.popup__form');
 
 //Форма добавления карточки
@@ -92,7 +99,26 @@ function formNewCardSubmit(evt) {
 
 formPlace.addEventListener('submit', formNewCardSubmit);
 
+//API код
+Promise.all([getUserInfo(),getInitialCards()])
+    .then(([userData, cards]) => {
+        const profileId = userData._id;
+        personName.textContent = userData.name;
+        profileDescription.textContent = userData.about;
+        profileImage.style.backgroundImage = `url('${userData.avatar}')`;
+
+        cards.forEach((item) => {
+            const cardElement = createCard(item, cardTemplate, deleteCard, addLikeCard, openPlacePopup, profileId);
+            cardList.append(cardElement);
+        });
+    })
+
+
 initialCards.forEach((item) => {
     const cardElement = createCard(item, cardTemplate, deleteCard, openPlacePopup, addLikeCard);
     cardList.append(cardElement);
 });
+
+//Валидация
+enableValidation(validationConfig);
+
