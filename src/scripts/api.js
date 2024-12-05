@@ -51,7 +51,15 @@ export const putLikeCard = (cardId) => {
     return fetch(`${apiConfig.baseURL}/cards/likes/${cardId}`, {
         method: 'PUT',
         headers: apiConfig.headers,
-    }).then((res) => res.json);
+    }).then((res) => res.json());
+};
+
+//снятие лайка
+export const deleteLike = (cardId) => {
+    return fetch(`${apiConfig.baseURL}/cards/likes/${cardId}`, {
+        method: 'DELETE',
+        headers: apiConfig.headers,
+    }).then((res) => res.json());
 };
 
 //удаление карточки
@@ -62,11 +70,14 @@ export const deleteMyCard = (cardId) => {
     }).then((res) => res.json());
 };
 
-//лайк
-export const likeCard = (cardId, isLiked) => {
-    return fetch(`${apiConfig.baseURL}/cards/likes/${cardId}`, {
-        method: isLiked? 'DELETE': 'PUT',
-        headers: apiConfig.headers,
+//Обновление аватара пользователя
+export const updateNewAvatar = (avatarLink) => {
+    return fetch(`${config.baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: config.headers,
+      body: JSON.stringify({
+        avatar: avatarLink,
+      }),
     }).then((res) => res.json());
-};
+  };
 

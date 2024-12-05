@@ -11,7 +11,7 @@ import {
     getInitialCards, 
     editUserInfo,
     editNewCard,
-    deleteMyCard
+    updateNewAvatar
 } from './scripts/api.js';
 
 const cardList = document.querySelector('.places__list');
@@ -24,6 +24,20 @@ const placesList = document.querySelector('.places__list');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const closeButtons = document.querySelectorAll('.popup__close');
+
+const popupTypeAvatar = document.querySelector('.popup_type_avatar');
+const avatarForm = document.forms['avatar_edit'];
+const avatarFormInput = avatarForm.elements.link;
+const avatarEditButton = document.querySelector('.profile__avatar-button');
+const formTypeAvatar = popupTypeAvatar.querySelector('.popup__form');
+const popupInputTypeAvatarUrl = popupTypeAvatar.querySelector('.popup__input_type_avatar_url');
+
+
+avatarEditButton.addEventListener('click', () => {
+    popupInputTypeAvatarUrl.value = '';
+    clearValidation(popupTypeAvatar, validationConfig);
+    openModal(popupTypeAvatar);
+})
 
 import { openModal, closeModal } from './scripts/modal.js';
 
