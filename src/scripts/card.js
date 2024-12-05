@@ -60,6 +60,9 @@ function addLikeCard(cardLikeButton, cardId, likeCounter) {
             cardLikeButton.classList.toggle('card__like-button_is-active');
             likeCounter.textContent = data.likes.length;
         })
+        .catch((error) => {
+            console.log(error);
+        });
 }
 
 export { createCard, deleteCard, cardTemplate, addLikeCard };

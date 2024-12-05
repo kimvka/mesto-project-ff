@@ -6,12 +6,16 @@ export const apiConfig = {
     }
 }
 
+const getResponseData = (res) => {
+    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+};
+
 //Загрузка информации о пользователе с сервера
 export const getUserInfo = () => {
     return fetch(`${apiConfig.baseURL}/users/me`, {
         method: 'GET',
         headers: apiConfig.headers,
-    }).then((res) => res.json());
+    }).then((res) => getResponseData(res));
 };
 
 //Загрузка карточек с сервера
@@ -19,7 +23,7 @@ export const getInitialCards = () => {
     return fetch(`${apiConfig.baseURL}/cards`, {
         method: 'GET',
         headers: apiConfig.headers,
-    }).then((res) => res.json());
+    }).then((res) => getResponseData(res));
 };
 
 //Редактирование профиля
@@ -31,7 +35,7 @@ export const editUserInfo = (userProfileName,userProfileAbout) => {
             name: userProfileName,
             about: userProfileAbout
         })
-    }).then((res) => res.json());
+    }).then((res) => getResponseData(res));
 };
 
 //Добавление новой карточки
@@ -43,7 +47,7 @@ export const editNewCard = (cadrName, cardLink) => {
             name: cadrName,
             link: cardLink
         })
-    }).then((res) => res.json());
+    }).then((res) => getResponseData(res));
 };
 
 //лайк карточки
@@ -51,7 +55,7 @@ export const likeCard = (cardId, isLikedCard) => {
     return fetch(`${apiConfig.baseURL}/cards/likes/${cardId}`, {
         method: isLikedCard? 'DELETE': 'PUT',
         headers: apiConfig.headers,
-    }).then((res) => res.json());
+    }).then((res) => getResponseData(res));
 };
 
 //удаление карточки
@@ -59,17 +63,17 @@ export const deleteMyCard = (cardId) => {
     return fetch(`${apiConfig.baseURL}/cards/${cardId}`, {
         method: 'DELETE',
         headers: apiConfig.headers,
-    }).then((res) => res.json());
+    }).then((res) => getResponseData(res));
 };
 
 //Обновление аватара пользователя
 export const updateNewAvatar = (avatarLink) => {
-    return fetch(`${config.baseUrl}/users/me/avatar`, {
+    return fetch(`${apiConfig.baseURL}/users/me/avatar`, {
       method: "PATCH",
-      headers: config.headers,
+      headers: apiConfig.headers,
       body: JSON.stringify({
         avatar: avatarLink,
       }),
-    }).then((res) => res.json());
-  };
+    }).then((res) => getResponseData(res));
+};
 
