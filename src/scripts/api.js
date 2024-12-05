@@ -47,17 +47,9 @@ export const editNewCard = (cadrName, cardLink) => {
 };
 
 //лайк карточки
-export const putLikeCard = (cardId) => {
+export const likeCard = (cardId, isLikedCard) => {
     return fetch(`${apiConfig.baseURL}/cards/likes/${cardId}`, {
-        method: 'PUT',
-        headers: apiConfig.headers,
-    }).then((res) => res.json());
-};
-
-//снятие лайка
-export const deleteLike = (cardId) => {
-    return fetch(`${apiConfig.baseURL}/cards/likes/${cardId}`, {
-        method: 'DELETE',
+        method: isLikedCard? 'DELETE': 'PUT',
         headers: apiConfig.headers,
     }).then((res) => res.json());
 };

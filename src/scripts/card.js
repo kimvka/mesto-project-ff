@@ -1,4 +1,4 @@
-import { deleteMyCard, putLikeCard, deleteLike } from './api.js';
+import { deleteMyCard, likeCard } from './api.js';
 
 const cardTemplate = document.querySelector('#card-template').content;
 
@@ -34,12 +34,12 @@ function createCard(item, cardTemplate, userId, deleteCallback, openPlacePopup, 
     const isCardLiked = item.likes.some(user => user._id === userId);
     
     if (isCardLiked) {
-        cardLikeButton.classList.add("card__like-button_is-active");
+        cardLikeButton.classList.add('card__like-button_is-active');
     }
 
     //лайк кнопки
     cardLikeButton.addEventListener('click', () => {
-        addLikeCard(cardLikeButton, likeCounter, cardId); // Переключаем состояние лайка
+        addLikeCard(cardLikeButton, cardId, likeCounter); // Переключаем состояние лайка
     });
     
     return cardElement;
@@ -52,17 +52,15 @@ function deleteCard(cardElement, id) {
 }
 
 //функция лайка карточки
-function addLikeCard(button, cardId, likeCounter) {
-    const isLiked = button.classList.contains('card__like-button_is-active')
-    ? deleteLike 
-    : putLikeCard;
+function addLikeCard(cardLikeButton, cardId, likeCounter) {
+    const isLiked = cardLikeButton.classList.contains('card__like-button_is-active');
    
-    isLiked(cardId)
+    likeCard(cardId, isLiked)
         .then((data) => {
-            button.classList.toggle('card__like-button_is-active');
+            cardLikeButton.classList.toggle('card__like-button_is-active');
             likeCounter.textContent = data.likes.length;
         })
-  }
+}
 
 export { createCard, deleteCard, cardTemplate, addLikeCard };
 

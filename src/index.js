@@ -29,15 +29,12 @@ const popupTypeAvatar = document.querySelector('.popup_type_avatar');
 const avatarForm = document.forms['avatar_edit'];
 const avatarFormInput = avatarForm.elements.link;
 const avatarEditButton = document.querySelector('.profile__avatar-button');
-const formTypeAvatar = popupTypeAvatar.querySelector('.popup__form');
-const popupInputTypeAvatarUrl = popupTypeAvatar.querySelector('.popup__input_type_avatar_url');
 
 
 avatarEditButton.addEventListener('click', () => {
-    popupInputTypeAvatarUrl.value = '';
     clearValidation(popupTypeAvatar, validationConfig);
     openModal(popupTypeAvatar);
-})
+});
 
 import { openModal, closeModal } from './scripts/modal.js';
 
@@ -131,7 +128,7 @@ Promise.all([getUserInfo(),getInitialCards()])
         profileImage.style.backgroundImage = `url('${userData.avatar}')`;
 
         cards.forEach((item) => {
-            const cardElement = createCard(item, cardTemplate, profileId, deleteCard, addLikeCard, openPlacePopup, profileId);
+            const cardElement = createCard(item, cardTemplate, profileId, deleteCard, addLikeCard, openPlacePopup);
             cardList.append(cardElement);
         });
     })

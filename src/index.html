@@ -120,9 +120,9 @@
             type="url"
             name="link"
             pattern="https?:\/\/.+"
-            class="popup__input popup__input_type_url popup__input_type_avatar_url"
-            id="input-avatar-link"
-            placeholder="URL на картинку"
+            class="popup__input popup__input_type_url"
+            id="type_url-input"
+            placeholder="Ссылка на картинку"
             data-error-message="Поле может содержать только url фотокарточки"
             required
           />
@@ -130,13 +130,12 @@
           <button type="submit" class="button popup__button">
             Сохранить
           </button>
-        
         </form>
       </div>
+    
     </div>
   </div>
 </div>
-
 
 <template id="card-template">
   <li class="places__item card">
@@ -146,7 +145,7 @@
       <h2 class="card__title"></h2>
       <div class="card__like_section">
         <button type="button" class="card__like-button"></button>
-        <span class="card__like_count"></span>
+        <span class="card__like_count">0</span>
       </div>
     </div>
   </li>
