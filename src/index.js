@@ -4,7 +4,7 @@ import { createCard, deleteCard, cardTemplate, addLikeCard } from './scripts/car
 
 import { initialCards } from './scripts/cards.js';
 
-import { enableValidation, validationConfig, clearValidation } from './scripts/validation.js';
+import { enableValidation, clearValidation } from './scripts/validation.js';
 
 import { 
     getUserInfo, 
@@ -14,7 +14,6 @@ import {
     updateNewAvatar
 } from './scripts/api.js';
 
-const cardList = document.querySelector('.places__list');
 const popupTypeEdit = document.querySelector('.popup_type_edit');
 const popupTypeNewCard = document.querySelector('.popup_type_new-card');
 const popupTypeImage = document.querySelector('.popup_type_image');
@@ -29,6 +28,15 @@ const popupTypeAvatar = document.querySelector('.popup_type_avatar');
 const avatarForm = document.forms['avatar_edit'];
 const avatarFormInput = avatarForm.elements.link;
 const avatarEditButton = document.querySelector('.profile__avatar-button');
+
+const validationConfig = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
+  };
 
 /// Функция button loading пока данные загружаются
 const renderLoading = (isLoading, button) => {
@@ -107,11 +115,10 @@ function formPersonSubmit(evt) {
 
 profilePersonForm.addEventListener('submit', formPersonSubmit);
 
-const popupNewCard = document.querySelector('.popup_type_new-card');
 const namePlaceInput = document.querySelector('.popup__input_type_card-name');
 const linkPlaceInput = document.querySelector('.popup__input_type_url');
 const profileImage = document.querySelector('.profile__image');
-const formPlace = popupNewCard.querySelector('.popup__form');
+const formPlace = popupTypeNewCard.querySelector('.popup__form');
 
 //Форма добавления карточки
 function formNewCardSubmit(evt) {
@@ -123,7 +130,7 @@ function formNewCardSubmit(evt) {
             const newPlaceLink = newCardData.link;
             
             placesList.prepend(createCard(newCardData, cardTemplate, profileId, deleteCard, openPlacePopup, addLikeCard));
-            closeModal(popupNewCard);
+            closeModal(popupTypeNewCard);
         })
         .catch((error) => {
             console.log(error);
@@ -167,7 +174,7 @@ Promise.all([getUserInfo(),getInitialCards()])
 
         cards.forEach((item) => {
             const cardElement = createCard(item, cardTemplate, profileId, deleteCard, openPlacePopup, addLikeCard);
-            cardList.append(cardElement);
+            placesList.append(cardElement);
         });
     })
     .catch((error) => {

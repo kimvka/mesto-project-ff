@@ -46,9 +46,13 @@ function createCard(item, cardTemplate, userId, deleteCallback, openPlacePopup, 
 }
 
 function deleteCard(cardElement, id) {
-    deleteMyCard(id).then(data => {
-        cardElement.remove();
-    })  
+    deleteMyCard(id)
+        .then(data => {
+            cardElement.remove();
+        })
+        .catch((error) => {
+            console.log(error);
+        });  
 }
 
 //функция лайка карточки
